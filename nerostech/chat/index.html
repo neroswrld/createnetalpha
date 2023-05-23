@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Chat</title>
+	<!-- Agrega tus estilos CSS aquí -->
+	<link rel="stylesheet" href="style.css" hr>
+
+</head>
+<script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.2/socket.io.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&display=swap" rel="stylesheet">
+
+
+<body >
+	<div class="pokemon-card">
+		<h2 id="pokemon-name" class="pokemon-name"></h2>
+		<img id="pokemon-sprite" class="pokemon-img" src="" alt="Pokemon Sprite" />
+		<p id="pokemon-types"></p>
+		<button id="load-pokemon">Load Pokemon</button>
+	  </div>
+	  <script>
+		const pokemonNameElement = document.getElementById("pokemon-name");
+		const pokemonSpriteElement = document.getElementById("pokemon-sprite");
+		const pokemonTypesElement = document.getElementById("pokemon-types");
+		const loadPokemonButton = document.getElementById("load-pokemon");
+  
+		function getRandomPokemonId() {
+		  return Math.floor(Math.random() * 898) + 1;
+		}
+  
+		function loadPokemonData(pokemonId) {
+		  const apiUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+  
+		  fetch(apiUrl)
+			.then((response) => response.json())
+			.then((data) => {
+			  pokemonNameElement.innerText = data.name;
+			  pokemonSpriteElement.src = data.sprites.front_default;
+			  pokemonTypesElement.innerText = data.types
+				.map((type) => type.type.name)
+				.join(", ");
+			})
+			.catch((error) => console.error(error));
+		}
+  
+		loadPokemonData(25);
+  
+		loadPokemonButton.addEventListener("click", () => {
+		  const pokemonId = getRandomPokemonId();
+		  loadPokemonData(pokemonId);
+		});
+	  </script>
+	</body>
+	
+  
+
+   
+  
+</body>
+
+</html>
